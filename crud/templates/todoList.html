@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS v5.3.8 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+
+    <body>
+        <div class="container-fluid" style="min-height: 100vh;">
+            <!-- headerr -->
+            <div class="p-3 d-flex justify-content-between">
+                <h1>Todo App</h1>
+                <div>
+                    <a href="{% url 'add' %}" class="btn btn-success">Add New +</a>
+                </div>
+            </div>
+            <!-- main -->
+             <div>
+                {% if data %}
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Created_at</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <td>{{i.id}}</td>
+                            <td>{{i.title}}</td>
+                            <td>{{i.description}}</td>
+                            <td>{{i.created_at}}</td>
+                            <td class="d-flex gap-3">
+                                {% if i.status == 'pending' %}
+                                <a href="{% url 'edit' i.id %}" class="btn">
+                                    <i class="fa-solid fa-pen" style="color: rgb(193, 245, 4);"></i>
+                                </a>
+                                <a href="{% url 'status' i.id %}" class="btn">
+                                    <i class="fa-solid fa-check text-success"></i>
+
+                                </a>
+                                {% else %}
+                                <h4 class="text-primary">Completed</h4>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'delete' i.id %}" class="btn">
+                                    <i class="fa-solid fa-trash" style="color: rgb(225, 0, 0);"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <h2 class="text-center my-5 text-danger">Nothing Added Yet</h2>
+
+                {% endif %}
+             </div>
+        </div>
+    </body>
+</html>
